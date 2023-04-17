@@ -5,6 +5,8 @@ int listLimit = 10;
 
 List<long> pingTimesList = new();
 
+//will delete next entry when it exceeds the listLimit and then sum up all elements into the avg variable
+//and then subtracts all through the amount of elements stored
 void GetAveragePing()
 {
     long avg = 0;
@@ -31,18 +33,21 @@ while (true)
 
     if (!string.IsNullOrEmpty(hostName))
     {
+        //ping instances for the utilites from the librarys
         Ping pingSender = new();
-
         PingOptions pingOptions = new();
-
         pingOptions.DontFragment = true;
-
+        
+        //some sample data that will be used inside the buffer
+        //and will be sind via the buffer inside the send method
         string data = "abcdefghijklmnopqrstuvwxyz";
         byte[] buffer = Encoding.ASCII.GetBytes(data);
         int timeOut = 128;
 
         PingReply reply;
 
+        //while after every runthrough of all statements it will check if escaped was pressed
+        //and then going back into asking for an adress to ping to
         do
         {
             while (!Console.KeyAvailable)
