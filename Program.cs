@@ -1,12 +1,15 @@
 ﻿using System.Net.NetworkInformation;
 using System.Text;
 
+int listLimit = 10;
+
 List<long> pingTimesList = new();
+
 void GetAveragePing()
 {
     long avg = 0;
 
-    if (pingTimesList.Count > 10)
+    if (pingTimesList.Count > listLimit)
     {
         pingTimesList.Remove(pingTimesList.First());
     }
@@ -16,9 +19,9 @@ void GetAveragePing()
         avg += t;
     }
 
-    avg /= 10;
+    avg /= pingTimesList.Count;
 
-    Console.WriteLine(avg);
+    Console.WriteLine("average ping: " + avg + " ms");
 }
 
 while (true)
@@ -42,7 +45,7 @@ while (true)
 
         do
         {
-            while(!Console.KeyAvailable)
+            while (!Console.KeyAvailable)
             {
                 reply = pingSender.Send(hostName, timeOut, buffer, pingOptions);
 
@@ -57,6 +60,6 @@ while (true)
                     Console.Clear();
                 }
             }
-        }while (Console.ReadKey(true).Key != ConsoleKey.Escape) ;
+        } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
     }
 }
